@@ -1,0 +1,36 @@
+
+{% include 'patials/header.html' %}
+<style>
+    h1{color: chocolate;
+        display: flex;
+        justify-content: center;
+        align-items: center;}
+    p{
+        color:white;
+        display: flex;
+        justify-content: center;
+        align-items: center;    }
+
+        
+    @keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    animation: fadeIn 2s ease-in-out;
+}
+
+</style>
+<div>
+    <h1>Welcome to Car Rentals</h1>
+<p>Explore premium and budget-friendly rental cars with ease.</p>
+</div>
+
+{% include 'patials/footer.html'%}
