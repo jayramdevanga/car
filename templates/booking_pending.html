@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Pending Approval</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 60px 20px; background: #f4f6f9; color: #333; }
+        .card { background: white; padding: 40px; max-width: 550px; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .icon { font-size: 50px; margin-bottom: 10px; }
+        .status-badge { background: #ffeaa7; color: #d63031; padding: 8px 20px; border-radius: 30px; font-weight: bold; display: inline-block; margin: 20px 0; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .details { text-align: left; background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #fdcb6e; }
+        .details p { margin: 8px 0; font-size: 15px; }
+        .btn { display: inline-block; background: #0984e3; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold; transition: 0.2s; margin-top: 15px; }
+        .btn:hover { background: #0268b3; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="icon">⌛</div>
+        <h2>Booking Request Pending!</h2>
+        <p>Thank you for choosing DriveElite. Your luxury rental request has been sent to our administration team for validation.</p>
+        
+        <div class="status-badge">Status: Awaiting Admin Approval</div>
+        
+        <div class="details">
+            <p><strong>Car:</strong> {{ booking.car.make }} {{ booking.car.model }} ({{ booking.car.year }})</p>
+            <p><strong>Trip Period:</strong> {{ booking.start_date }} to {{ booking.end_date }}</p>
+            {% if booking.total_price %}
+            <p><strong>Estimated Total:</strong> ${{ booking.total_price }}</p>
+            {% endif %}
+        </div>
+        
+        <p style="color: #636e72; font-size: 13.5px;">You will receive a confirmation update as soon as an agent reviews your account logs.</p>
+        
+        <a href="/" class="btn">Go to Homepage</a>
+    </div>
+
+</body>
+</html>

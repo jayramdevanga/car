@@ -12,4 +12,5 @@ urlpatterns = [
     path('login/', views.login_gateway, name='login'), # <-- Added login gateway
     path('logout/', views.logout_view, name='logout'), # <-- Added logout route
     path('register/', views.register_gateway, name='register'),
+    path('booking-pending/<int:booking_id>/', views.booking_pending_view, name='booking_pending'),
 ]

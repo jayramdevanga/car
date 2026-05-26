@@ -128,3 +128,13 @@ def register_gateway(request):
         form = UserCreationForm()
         
     return render(request, 'register.html', {'form': form})
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Booking, Car
+
+@login_required
+def booking_pending_view(request, booking_id):
+    # Safely fetch the booking belonging to the logged-in user
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+    return render(request, 'booking_pending.html', {'booking': booking})
