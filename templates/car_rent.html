@@ -1,0 +1,137 @@
+{% include 'partials/header.html' %}
+
+<style>
+  /* Base layout reset to guarantee background coverage */
+  body {
+    background-color: #0a0a0a !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Page Header Title */
+  .page-title {
+    color: #d4af37; /* Champagne Gold */
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 40px 0 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Core grid constraint bounding container */
+  .car-grid-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 50px 20px;
+  }
+
+  /* Force elements side-by-side using CSS Grid */
+  .car-list {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 30px !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Box styling for each car item */
+  .car-card {
+    background-color: #161616; /* Rich Obsidian */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: 1px solid #252525;
+  }
+
+  .car-card a {
+    text-decoration: none !important;
+    color: #f5f5f5 !important;
+    display: block;
+  }
+
+  /* Image Aspect Box Fixer */
+  .car-image-wrapper {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background-color: #000;
+  }
+
+  .car-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  /* Text block inside card wrapper */
+  .car-details {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .car-details h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f5f5f5;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+  }
+
+  .car-meta {
+    font-size: 14px;
+    color: #aa9977; /* Muted Brass */
+    margin: 5px 0;
+  }
+
+  .car-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d4af37; /* Gold */
+    margin-top: 12px;
+  }
+
+  /* Modern Cursor Move Lift Hover Action */
+  .car-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(212, 175, 55, 0.2);
+    border-color: #d4af37;
+  }
+
+  .car-card:hover .car-image-wrapper img {
+    transform: scale(1.08);
+  }
+
+  .car-card:hover .car-details h3 {
+    color: #d4af37;
+  }
+</style>
+
+<h1 class="page-title">Explore Our Fleet</h1>
+
+<div class="car-grid-container">
+  <ul class="car-list">
+    {% for car in cars %}
+    <li class="car-card">
+      <a href="{% url 'car_detail' car.id %}">
+        <div class="car-image-wrapper">
+          <img src="{{ car.image }}" alt="{{ car.make }} {{ car.model }}">
+        </div>
+        <div class="car-details">
+          <h3>{{ car.make }} {{ car.model }}</h3>
+          <p class="car-meta">📅 Year: {{ car.year }} | 📍 {{ car.location }}</p>
+          <p class="car-price">${{ car.price_per_day }} <span style="font-size: 13px; color: #aa9977; font-weight: normal;">/ day</span></p>
+        </div>
+      </a>
+    </li>
+    {% empty %}
+    <p style="color: white; text-align: center; width: 100%;">No vehicles found in database registry.</p>
+    {% endfor %}
+  </ul>
+</div>
+
+{% include 'partials/footer.html' %}

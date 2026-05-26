@@ -1,0 +1,1 @@
+web: gunicorn projrct.wsgi:application

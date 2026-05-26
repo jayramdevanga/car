@@ -31,13 +31,23 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # 1. Core Django Built-in Apps (Must come first!)
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
+    'django.contrib.contenttypes', # <-- This fixes the exact error you are seeing!
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'car_app'
+    'django.contrib.sites',        # <-- Required by allauth
+
+    # 2. Third-Party Authentication Apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    # 3. Your Custom Built Application Engine
+    'car_app',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +58,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    # Add this line right here at the bottom:
+    'allauth.account.middleware.AccountMiddleware', 
 ]
 
 ROOT_URLCONF = 'projrct.urls'
@@ -55,7 +68,7 @@ ROOT_URLCONF = 'projrct.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR,'templete'],
+        'DIRS': [BASE_DIR,'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,3 +136,51 @@ STATICFILES_DIRS=[BASE_DIR/'static']
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Authentication Configurations
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+# Where to redirect users after a successful Google Sign-in
+LOGIN_REDIRECT_URL = 'car_rent'
+LOGOUT_REDIRECT_URL = 'home'
+
+# Configure Google OAuth details to not require profile selection step
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'OAUTH_PREFIX': 'https://accounts.google.com/o/oauth2/v2/auth',
+    }
+}
+# Where to redirect users after a successful Google Sign-in
+LOGIN_REDIRECT_URL = 'car_rent'
+LOGOUT_REDIRECT_URL = 'home'
+
+# 🔥 ADD THIS LINE TO SKIP THE CONFIRMATION PAGE INSTANTLY:
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+# Configure Google OAuth details
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'OAUTH_PREFIX': 'https://accounts.google.com/o/oauth2/v2/auth',
+    }
+}
+
+import os
+from pathlib import Path
+
+# Change DEBUG to False so users don't see error code traces
+DEBUG = False
+
+# Allow your live URL and local host to run the app
+ALLOWED_HOSTS = ['*']
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

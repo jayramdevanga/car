@@ -1,0 +1,78 @@
+{% include 'partials/header.html' %}
+
+<style>
+  .payment-container {
+    text-align: center;
+    margin: 40px auto;
+    padding: 30px;
+    max-width: 500px;
+    background-color: #001f3f;
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    font-family: Arial, sans-serif;
+  }
+  .payment-card {
+    background-color: #002d59;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: left;
+  }
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #004080;
+    background-color: #001f3f;
+    color: white;
+    box-sizing: border-box;
+  }
+  .btn-pay {
+    background-color: #4BB543; /* Green for secure payment */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+  }
+  .btn-pay:hover {
+    background-color: #3ca335;
+  }
+</style>
+
+<div class="payment-container">
+  {% if success %}
+    <h1 style="color: #4BB543;">Booking Confirmed! 🎉</h1>
+    <p>Thank you! Your transaction for the <strong>{{ car.make }} {{ car.model }}</strong> went through successfully.</p>
+    <br>
+    <a href="{% url 'car_rent' %}" style="color: chocolate; text-decoration: none; font-weight: bold;">← Rent another car</a>
+  {% else %}
+    <h1>Secure Checkout</h1>
+    <p>You are booking: <strong>{{ car.make }} {{ car.model }}</strong></p>
+    
+    <div class="payment-card">
+      <p><strong>Pickup Date:</strong> {{ booking_data.start_date }}</p>
+      <p><strong>Return Date:</strong> {{ booking_data.end_date }}</p>
+      <hr style="border-color: #004080;">
+      <h3 style="color: chocolate;">Total Amount: ${{ booking_data.total_price }}</h3>
+    </div>
+
+    <form method="POST">
+      {% csrf_token %}
+      <input type="text" placeholder="Cardholder Name" class="input-field" required>
+      <input type="text" placeholder="Card Number (16 digits)" class="input-field" required>
+      <div style="display: flex; gap: 10px;">
+        <input type="text" placeholder="MM/YY" class="input-field" required>
+        <input type="text" placeholder="CVV" class="input-field" required>
+      </div>
+      <button type="submit" class="btn-pay">Pay & Complete Order</button>
+    </form>
+  {% endif %}
+</div>
+
+{% include 'partials/footer.html' %}

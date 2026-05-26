@@ -1,0 +1,102 @@
+{% include 'partials/header.html' %}
+
+<style>
+  .hero-section {
+    position: relative;
+    height: 85vh;
+    width: 100%;
+    background-image: url('https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=1920&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* Dark Overlay matching the new deep dark palette */
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.95));
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0 20px;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #f5f5f5;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    animation: fadeInUp 1s ease-out forwards;
+  }
+
+  .hero-title span {
+    color: #d4af37; /* Gold Accent */
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: #aa9977; /* Muted Brass */
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.4s forwards;
+  }
+
+  .btn-cta {
+    display: inline-block;
+    background-color: #d4af37; /* Gold Button */
+    color: #0a0a0a; /* Black text for high contrast readability */
+    text-decoration: none;
+    padding: 14px 35px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.8s forwards;
+  }
+
+  .btn-cta:hover {
+    background-color: #f5d05c; /* Lighter gold flare on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+  }
+</style>
+
+<div class="hero-section">
+  <div class="hero-overlay"></div>
+  
+  <div class="hero-content">
+    <h1 class="hero-title">Welcome to <span>Car Rentals</span></h1>
+    <p class="hero-subtitle">Explore premium and budget-friendly rental cars with ease.</p>
+    <a href="{% url 'car_rent' %}" class="btn-cta">Find Your Car →</a>
+  </div>
+</div>
+
+{% include 'partials/footer.html' %}
